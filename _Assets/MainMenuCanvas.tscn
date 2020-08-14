@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://_GUI/_Imports/Normal_Font.res" type="DynamicFont" id=1]
+[ext_resource path="res://_GUI/_Imports/Title_Font.res" type="DynamicFont" id=2]
+[ext_resource path="res://_Scripts/MainMenuController.cs" type="Script" id=3]
+
+[node name="MainMenuCanvas" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.513726, 0.513726, 0.513726, 1 )
+
+[node name="Title" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -270.5
+margin_top = 150.0
+margin_right = 270.5
+margin_bottom = 207.0
+custom_fonts/font = ExtResource( 2 )
+text = "Prompt Generator"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -175.0
+margin_top = -60.0
+margin_right = 175.0
+margin_bottom = -5.0
+custom_fonts/font = ExtResource( 1 )
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -172.484
+margin_top = 25.0
+margin_right = 177.516
+margin_bottom = 80.0
+custom_fonts/font = ExtResource( 1 )
+disabled = true
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -175.0
+margin_top = 110.0
+margin_right = 175.0
+margin_bottom = 165.0
+custom_fonts/font = ExtResource( 1 )
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}

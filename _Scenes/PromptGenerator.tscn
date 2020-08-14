@@ -1,0 +1,451 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://_Scripts/PreloadableScene.cs" type="Script" id=1]
+[ext_resource path="res://_Assets/Canvas.tscn" type="PackedScene" id=2]
+[ext_resource path="res://_GUI/_Imports/Title_Font.res" type="DynamicFont" id=3]
+[ext_resource path="res://_GUI/_Imports/Normal_Font.res" type="DynamicFont" id=4]
+[ext_resource path="res://_Scripts/CategoriesController.cs" type="Script" id=5]
+[ext_resource path="res://_GUI/_Imports/Ataro.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://_Assets/Dial.tscn" type="PackedScene" id=7]
+[ext_resource path="res://_Scripts/PromptsController.cs" type="Script" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 18
+font_data = ExtResource( 6 )
+
+[node name="Main" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Canvas" parent="." instance=ExtResource( 2 )]
+PreviousScene = "res://_Scenes/MainMenu.tscn"
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.34902, 0.34902, 0.34902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -179.5
+margin_top = 25.0
+margin_right = 179.5
+margin_bottom = 82.0
+custom_fonts/font = ExtResource( 3 )
+text = "Prompt Generation"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Generator" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Categories" type="Control" parent="Generator"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -225.0
+margin_top = -200.0
+margin_right = 225.0
+margin_bottom = 200.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="Generator/Categories"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.247059, 0.247059, 0.247059, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridBackground" type="ColorRect" parent="Generator/Categories"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = 60.0
+margin_right = -7.99997
+margin_bottom = -10.0
+color = Color( 0.109804, 0.109804, 0.109804, 0.627451 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="Generator/Categories"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = 60.0
+margin_right = -7.99997
+margin_bottom = -10.0
+grow_horizontal = 2
+custom_constants/vseparation = 12
+custom_constants/hseparation = 12
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Generate" type="Button" parent="Generator/Categories"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -100.0
+margin_top = 15.0
+margin_right = 100.0
+margin_bottom = 65.0
+custom_fonts/font = ExtResource( 4 )
+text = "Generate"
+
+[node name="Label" type="Label" parent="Generator/Categories"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -161.5
+margin_top = 5.0
+margin_right = 161.5
+margin_bottom = 31.0
+custom_fonts/font = ExtResource( 4 )
+text = "Categories"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Generator/Categories"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -161.0
+margin_top = 32.5213
+margin_right = 162.0
+margin_bottom = 52.5213
+custom_fonts/font = SubResource( 1 )
+text = "Please Select at least 2 categories"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings" type="Control" parent="Generator/Categories"]
+margin_left = -260.0
+margin_right = -15.0
+margin_bottom = 400.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Generator/Categories/Settings"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -66.5
+margin_top = 10.0
+margin_right = 66.5
+margin_bottom = 39.0
+custom_fonts/font = ExtResource( 4 )
+text = "Other Settings"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NumPrompts" type="Control" parent="Generator/Categories/Settings"]
+margin_left = 1.0
+margin_top = 57.0
+margin_right = 228.0
+margin_bottom = 157.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Generator/Categories/Settings/NumPrompts"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.180392, 0.180392, 0.180392, 0.764706 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dial" parent="Generator/Categories/Settings/NumPrompts" instance=ExtResource( 7 )]
+anchor_top = 0.5
+anchor_right = 0.0
+anchor_bottom = 0.5
+margin_top = -50.0
+margin_right = 55.0
+margin_bottom = 50.0
+MaxValue = 4
+MinValue = 1
+
+[node name="Label" type="Label" parent="Generator/Categories/Settings/NumPrompts"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -160.0
+margin_top = -35.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 2 )
+text = "Number of Prompts"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimedPrompts" type="Control" parent="Generator/Categories/Settings"]
+margin_top = 171.0
+margin_right = 227.0
+margin_bottom = 271.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Generator/Categories/Settings/TimedPrompts"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.180392, 0.180392, 0.180392, 0.764706 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Generator/Categories/Settings/TimedPrompts"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -160.0
+margin_top = -35.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 2 )
+text = "Timed Prompts"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckButton" type="CheckBox" parent="Generator/Categories/Settings/TimedPrompts"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -30.0
+margin_right = 24.0
+margin_bottom = -5.99999
+rect_scale = Vector2( 2.5, 2.5 )
+
+[node name="Timer" type="Control" parent="Generator/Categories/Settings"]
+visible = false
+margin_top = 285.0
+margin_right = 227.0
+margin_bottom = 385.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Generator/Categories/Settings/Timer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.180392, 0.180392, 0.180392, 0.764706 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Minute" parent="Generator/Categories/Settings/Timer" instance=ExtResource( 7 )]
+MaxValue = 10
+
+[node name="Label2" type="Label" parent="Generator/Categories/Settings/Timer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -166.0
+margin_top = -35.0
+margin_right = -131.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 2 )
+text = "Min"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Second" parent="Generator/Categories/Settings/Timer" instance=ExtResource( 7 )]
+margin_left = 115.0
+margin_right = -57.0
+margin_bottom = 0.0
+MaxValue = 60
+
+[node name="Label" type="Label" parent="Generator/Categories/Settings/Timer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -51.0
+margin_top = -35.0
+margin_right = -14.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 2 )
+text = "Sec"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Prompts" type="Control" parent="Generator"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -200.0
+margin_right = 400.0
+margin_bottom = 265.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Control" parent="Generator/Prompts"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -100.0
+margin_right = 100.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 40 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Generator/Prompts/Timer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.160784, 0.160784, 0.160784, 1 )
+
+[node name="Label" type="Label" parent="Generator/Prompts/Timer"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 5.0
+margin_top = -20.0
+margin_right = 105.0
+margin_bottom = 20.0
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PausePlay" type="Button" parent="Generator/Prompts/Timer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -85.0
+margin_top = -20.0
+margin_right = -45.0
+margin_bottom = 20.0
+text = "||"
+
+[node name="Plus" type="Button" parent="Generator/Prompts/Timer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -20.0
+margin_right = -4.00002
+margin_bottom = 20.0
+text = "+10"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Generator/Prompts"]
+margin_left = -80.0
+margin_top = 45.0
+margin_right = 890.0
+margin_bottom = 400.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Generator/Prompts/ScrollContainer"]
+margin_right = 970.0
+margin_bottom = 360.0
+rect_min_size = Vector2( 970, 360 )
+
+[node name="Labels" type="Control" parent="Generator/Prompts/ScrollContainer/Control"]
+margin_right = 150.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 150, 400 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Generator/Prompts/ScrollContainer/Control/Labels"]
+margin_right = 150.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 150, 400 )
+custom_constants/separation = 10
+
+[node name="Container" type="Control" parent="Generator/Prompts/ScrollContainer/Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -820.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 820, 400 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Generator/Prompts/ScrollContainer/Control/Container"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 5
+alignment = 1
+
+[node name="Regenerate" type="Button" parent="Generator/Prompts"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = -50.0
+margin_right = 300.0
+margin_bottom = 3.05176e-05
+custom_fonts/font = ExtResource( 4 )
+text = "Regenerate"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Reset" type="Button" parent="Generator/Prompts"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -295.0
+margin_top = -50.0
+margin_right = -45.0
+margin_bottom = 3.05176e-05
+custom_fonts/font = ExtResource( 4 )
+text = "Reset"
+__meta__ = {
+"_edit_use_anchors_": false
+}

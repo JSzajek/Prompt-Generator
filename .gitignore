@@ -1,0 +1,11 @@
+.vscode/
+.import/
+.mono/metadata/
+.mono/temp/
+Architect Game.sln
+astarlinker_debug.txt
+project.godot
+default_env.tres
+export_presets.cfg
+*.import
+.vs/Architect Game/v16/TestStore/
