@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://_Scripts/PreloadableScene.cs" type="Script" id=1]
 [ext_resource path="res://_Assets/Canvas.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://_GUI/_Imports/Ataro.otf" type="DynamicFontData" id=6]
 [ext_resource path="res://_Assets/Dial.tscn" type="PackedScene" id=7]
 [ext_resource path="res://_Scripts/PromptsController.cs" type="Script" id=8]
+[ext_resource path="res://_Scripts/ScrollContainerController.cs" type="Script" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 12
@@ -36,7 +37,7 @@ anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -179.5
 margin_top = 25.0
-margin_right = 179.5
+margin_right = 180.5
 margin_bottom = 82.0
 custom_fonts/font = ExtResource( 3 )
 text = "Prompt Generation"
@@ -325,11 +326,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="Generator/Prompts"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -90.0
+margin_right = 100.0
+margin_bottom = 3.05176e-05
+color = Color( 0.313726, 0.313726, 0.313726, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="Generator/Prompts"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -90.0
+margin_top = 45.0
+margin_right = 100.0
+margin_bottom = -65.0
+color = Color( 0.235294, 0.235294, 0.235294, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Timer" type="Control" parent="Generator/Prompts"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -100.0
-margin_right = 100.0
+margin_left = -25.0
+margin_right = 175.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 200, 40 )
 __meta__ = {
@@ -376,11 +400,26 @@ margin_right = -4.00002
 margin_bottom = 20.0
 text = "+10"
 
+[node name="Label2" type="Label" parent="Generator/Prompts/Timer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -175.0
+margin_top = 5.0
+margin_right = -111.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 4 )
+text = "Timer: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ScrollContainer" type="ScrollContainer" parent="Generator/Prompts"]
 margin_left = -80.0
 margin_top = 45.0
-margin_right = 890.0
+margin_right = 902.0
 margin_bottom = 400.0
+scroll_horizontal_enabled = false
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

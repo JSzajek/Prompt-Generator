@@ -57,7 +57,6 @@ margin_top = 25.0
 margin_right = 177.516
 margin_bottom = 80.0
 custom_fonts/font = ExtResource( 1 )
-disabled = true
 text = "Options"
 __meta__ = {
 "_edit_use_anchors_": false

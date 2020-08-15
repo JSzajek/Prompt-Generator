@@ -24,6 +24,9 @@ public class PromptsController : Control
 
 	#region Constructors
 
+	/// <summary>
+    /// Initializes a new instance of the <see cref="PromptsController"/> class.
+    /// </summary>
 	public override void _Ready()
 	{
         categoriesController = this.GetRoot().Get<CategoriesController>("Main/Generator/Categories");
@@ -36,8 +39,9 @@ public class PromptsController : Control
 		promptCategoriesController = Navigator.PromptCategoriesController;
 		container = this.Get<HBoxContainer>("ScrollContainer/Control/Container/HBoxContainer");
 		labelContainer = this.Get<VBoxContainer>("ScrollContainer/Control/Labels/VBoxContainer");
+		this.Get<Control>("Timer").Visible = false;
 		timerLabel = this.Get<Label>("Timer/Label");
-		
+
 		this.Get<Button>("Regenerate").Connect("pressed", this, "OnRegeneratePressed");
 		this.Get<Button>("Reset").Connect("pressed", this, "OnResetPressed");
 		pausePlayButton = this.Get<Button>("Timer/PausePlay");
@@ -83,7 +87,7 @@ public class PromptsController : Control
 		foreach(var category in categories)
 		{
 			var temp = instance.Duplicate(8) as Label;
-			temp.Text = category.ToFriendlyString() + ":";
+			temp.Text = " " + category.ToFriendlyString() + ":";
 			labelContainer.AddChild(temp);
 		}
 

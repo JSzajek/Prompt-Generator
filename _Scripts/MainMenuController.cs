@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 /// <summary>
 /// Controller class controlling all functionality related
@@ -46,8 +45,9 @@ public class MainMenuController : Control
     /// <summary>
 	/// Executes the options command.
 	/// </summary>
-	private void OnOptionsPressed() {
-		// To Do - Implement
+	private void OnOptionsPressed() 
+    {
+		Navigator.SceneController.GotoScene("res://_Scenes/OptionsPage.tscn");
 	}
 
     /// <summary>

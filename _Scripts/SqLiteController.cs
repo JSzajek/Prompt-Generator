@@ -59,6 +59,34 @@ public class SqLiteController : Node
 		return readerCommand.ExecuteReader();
 	}
 
+	
+	/// <summary>
+	/// Determines whether the row value exists within the table.
+	/// </summary>
+	/// <param name="table">The table to check</param>
+	/// <param name="rowValue">The row value to check for</param>
+	/// <returns>Whether to row exists</returns>
+	public bool CheckForRow(string table, string rowValue)
+	{
+		var dataReader = ExecuteReader("SELECT EXISTS(SELECT 1 FROM " + table + " WHERE Value=\"" + rowValue + "\" LIMIT 1);");
+		var result = dataReader.Read() ? dataReader.GetByte(0) == 1 : false;
+		dataReader.Close();
+		return result;
+	}
+
+	/// <summary>
+	/// Determines whether the table exists within the table.
+	/// </summary>
+	/// <param name="tableName">The table to check for</param>
+	/// <returns>Whether the table exists</returns>
+	public bool CheckForTable(string tableName)
+	{
+		var dataReader = ExecuteReader("SELECT EXISTS(SELECT name FROM sqlite_master WHERE type = \'table\' AND name=\'" + tableName + "\' LIMIT 1);");
+		var result = dataReader.Read() ? dataReader.GetByte(0) == 1 : false;
+		dataReader.Close();
+		return result;
+	}
+
 	#endregion Public Methods
 
 	#region Private Methods
@@ -81,6 +109,6 @@ public class SqLiteController : Node
 		}
 		return sqlite_conn;
 	}
-	
+
 	#endregion Private Methods
 }

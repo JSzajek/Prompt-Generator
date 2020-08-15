@@ -46,11 +46,9 @@ public class PromptCategoriesController : Node
 	{
 		var dataReader = sqlite.ExecuteReader("SELECT * FROM " + category.ToFriendlyString().Replace(' ', '_') 
 												+ " ORDER BY RANDOM() LIMIT 1");
-		if (dataReader.Read())
-		{
-			return dataReader.GetString(0);
-		}
-		return "";
+		var result = dataReader.Read() ? dataReader.GetString(0) : "";
+		dataReader.Close();
+		return result;
 	}
 
 	#endregion Public Methods
@@ -79,7 +77,10 @@ public class PromptCategoriesController : Node
 					continue;
 				}
 
-				InsertData(tableName, line);
+				if (!sqlite.CheckForRow(tableName, line))
+				{
+					InsertData(tableName, line);
+				}
 			}
 			reader.Close();
 		}
@@ -90,24 +91,13 @@ public class PromptCategoriesController : Node
 	/// </summary>
 	/// <param name="table">The character table to insert into</param>
 	/// <param name="value">The value to insert into the table</param>
-	private void InsertData(string table, string value)
-	{
-		sqlite.ExecuteCommandNonQuery("INSERT INTO " + table + " (Value) " + "VALUES (\"" + value + "\");");
-	}
+	private void InsertData(string table, string value) => sqlite.ExecuteCommandNonQuery("INSERT INTO " + table + " (Value) " + "VALUES (\"" + value + "\");");
 
 	/// <summary>
 	/// Creates a default character table within the database for the passed character name
 	/// </summary>
 	/// <param name="character">The character name</param>
-	private void CreateDefaultTable(string tableName)
-	{
-		// Forcefully resetting the table - should switch to only updating if there has been changes
-		sqlite.ExecuteCommandNonQuery("DROP TABLE if exists \"" + tableName + "\";");
-		sqlite.ExecuteCommandNonQuery("VACUUM;");
-
-		GD.Print("Creating a table for " + tableName);
-		sqlite.ExecuteCommandNonQuery("CREATE TABLE if not exists \"" + tableName + "\" (\"Value\"	TEXT);");
-	}
+	private void CreateDefaultTable(string tableName) => sqlite.ExecuteCommandNonQuery("CREATE TABLE if not exists \"" + tableName + "\" (\"Value\"	TEXT);");
 
 	#endregion Private Methods
 }

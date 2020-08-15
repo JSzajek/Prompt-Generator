@@ -1,0 +1,254 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://_Assets/Canvas.tscn" type="PackedScene" id=1]
+[ext_resource path="res://_GUI/_Imports/Title_Font.res" type="DynamicFont" id=2]
+[ext_resource path="res://_Scripts/OptionsController.cs" type="Script" id=3]
+[ext_resource path="res://_GUI/_Imports/Normal_Font.res" type="DynamicFont" id=4]
+[ext_resource path="res://_Assets/options_buttongroup.tres" type="ButtonGroup" id=5]
+[ext_resource path="res://_Scripts/PreloadableScene.cs" type="Script" id=6]
+[ext_resource path="res://_GUI/_Imports/Ataro.otf" type="DynamicFontData" id=7]
+[ext_resource path="res://_GUI/_Imports/search_white-24px.svg" type="Texture" id=8]
+[ext_resource path="res://_Scripts/PromptsPageController.cs" type="Script" id=9]
+[ext_resource path="res://_Scripts/ScrollContainerController.cs" type="Script" id=10]
+[ext_resource path="res://_GUI/_Imports/add_white-24px.svg" type="Texture" id=11]
+
+[sub_resource type="DynamicFont" id=1]
+size = 18
+font_data = ExtResource( 7 )
+
+[node name="Main" type="Node"]
+script = ExtResource( 6 )
+
+[node name="Canvas" parent="." instance=ExtResource( 1 )]
+PreviousScene = "res://_Scenes/MainMenu.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.34902, 0.34902, 0.34902, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -71.5
+margin_top = 25.0
+margin_right = 71.5
+margin_bottom = 82.0
+custom_fonts/font = ExtResource( 2 )
+text = "Options"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -425.0
+margin_top = -212.5
+margin_right = 425.0
+margin_bottom = 237.5
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Options"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.313726, 0.313726, 0.313726, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Prompts" type="Button" parent="Options"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -275.0
+margin_top = 10.0
+margin_right = -125.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 4 )
+toggle_mode = true
+pressed = true
+group = ExtResource( 5 )
+text = "Prompts"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Others" type="Button" parent="Options"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 125.0
+margin_top = 10.0
+margin_right = 275.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 4 )
+toggle_mode = true
+group = ExtResource( 5 )
+text = "Others"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PromptsPage" type="Control" parent="Options"]
+margin_right = 850.0
+margin_bottom = 450.0
+mouse_filter = 2
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Options/PromptsPage"]
+margin_left = 15.0
+margin_top = 75.0
+margin_right = 840.0
+margin_bottom = 425.0
+color = Color( 0.235294, 0.235294, 0.235294, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="Options/PromptsPage"]
+margin_left = 150.0
+margin_top = 150.0
+margin_right = 700.0
+margin_bottom = 415.0
+color = Color( 0.176471, 0.176471, 0.176471, 1 )
+
+[node name="SearchBar" type="LineEdit" parent="Options/PromptsPage"]
+margin_left = 150.0
+margin_top = 100.0
+margin_right = 400.0
+margin_bottom = 135.0
+right_icon = ExtResource( 8 )
+placeholder_text = "Search For Category"
+placeholder_alpha = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SearchButton" type="Button" parent="Options/PromptsPage/SearchBar"]
+margin_left = 215.0
+margin_right = 251.0
+margin_bottom = 35.0
+icon = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AddBar" type="LineEdit" parent="Options/PromptsPage"]
+margin_left = 435.0
+margin_top = 100.0
+margin_right = 685.0
+margin_bottom = 135.0
+right_icon = ExtResource( 8 )
+placeholder_text = "Add Prompt"
+placeholder_alpha = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ErrorColor" type="ColorRect" parent="Options/PromptsPage/AddBar"]
+visible = false
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = -2.0
+margin_right = 2.00005
+margin_bottom = 2.00001
+color = Color( 1, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Options/PromptsPage/AddBar/ErrorColor"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 1.0
+margin_top = -18.0
+margin_right = 253.0
+margin_bottom = 2.0
+text = "Error in Adding, value may already exist"
+align = 1
+valign = 1
+
+[node name="AddButton" type="Button" parent="Options/PromptsPage/AddBar"]
+margin_left = 215.0
+margin_right = 251.0
+margin_bottom = 35.0
+icon = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResetTable" type="Button" parent="Options/PromptsPage"]
+margin_left = 700.0
+margin_top = 98.0
+margin_right = 835.0
+margin_bottom = 138.0
+custom_fonts/font = SubResource( 1 )
+text = "Reset to Defaults"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CategoriesScroll" type="ScrollContainer" parent="Options/PromptsPage"]
+margin_left = 151.0
+margin_top = 150.0
+margin_right = 301.0
+margin_bottom = 415.0
+rect_min_size = Vector2( 150, 265 )
+scroll_horizontal_enabled = false
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Options/PromptsPage/CategoriesScroll"]
+margin_right = 145.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 145, 250 )
+custom_constants/separation = 10
+
+[node name="PromptsScroll" type="ScrollContainer" parent="Options/PromptsPage"]
+margin_left = 315.0
+margin_top = 157.5
+margin_right = 690.0
+margin_bottom = 407.5
+scroll_horizontal_enabled = false
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="Options/PromptsPage/PromptsScroll"]
+columns = 2
+
+[node name="OthersPage" type="Control" parent="Options"]
+visible = false
+margin_right = 850.0
+margin_bottom = 450.0
+rect_min_size = Vector2( 850, 450 )
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Options/OthersPage"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -54.5
+margin_top = -7.0
+margin_right = 54.5
+margin_bottom = 7.0
+text = "Work In Progress"
+align = 1
+valign = 1

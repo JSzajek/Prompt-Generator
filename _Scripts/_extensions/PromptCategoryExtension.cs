@@ -12,10 +12,9 @@ public static class PromptCategoryExtension
     /// <returns>The friendly string of the prompt category</returns>
     public static string ToFriendlyString(this PromptCategory category)
     {
-        DescriptionAttribute[] attributes = (DescriptionAttribute[])category
-           .GetType()
-           .GetField(category.ToString())
-           .GetCustomAttributes(typeof(DescriptionAttribute), false);
+        DescriptionAttribute[] attributes = (DescriptionAttribute[])category.GetType()
+                                            .GetField(category.ToString())
+                                            .GetCustomAttributes(typeof(DescriptionAttribute), false);
         return attributes.Length > 0 ? attributes[0].Description : string.Empty;
     }
 }
