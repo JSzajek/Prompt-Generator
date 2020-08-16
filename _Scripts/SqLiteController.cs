@@ -101,7 +101,6 @@ public class SqLiteController : Node
 		try
 		{
 			sqlite_conn.Open();
-			GD.Print("opened the sqlite connection");
 		}
 		catch (Exception exception)
 		{

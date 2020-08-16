@@ -1,5 +1,9 @@
 using Godot;
 
+/// <summary>
+/// Controller class controlling which option page
+/// is currently visible based on the toggle buttons.
+/// </summary>
 public class OptionsController : Control
 {
     #region Fields
@@ -31,6 +35,9 @@ public class OptionsController : Control
 
     #region Public Methods
 
+    /// <summary>
+	/// Cleans up the signal connections.
+	/// </summary>
     public override void _ExitTree()
     {
         this.Get<Button>("Prompts").Disconnect("toggled", this, "OnPromptsToggled");        
@@ -41,12 +48,20 @@ public class OptionsController : Control
 
     #region Private Methods
 
+    /// <summary>
+    /// Executes the prompts toggled command. Switching to prompts options page.
+    /// </summary>
+    /// <param name="state">The state of the toggle</param>
     private void OnPromptsToggled(bool state)
     {
         promptsPage.Visible = state;
         othersPage.Visible = !state;
     }
 
+    /// <summary>
+    /// Executes the others toggled command. Switching to others options page.
+    /// </summary>
+    /// <param name="state">The state of the toggle</param>
     private void OnOthersToggled(bool state)
     {
         promptsPage.Visible = !state;

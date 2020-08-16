@@ -1,7 +1,7 @@
-using System;
 using System.IO;
 using System.Linq;
 using Godot;
+using System.Collections.Generic;
 
 /// <summary>
 /// Controller class controlling all functionality to 
@@ -26,6 +26,9 @@ public class PromptCategoriesController : Node
 
 	#region Constructors
 
+	/// <summary>
+    /// Initializes a new instance of the <see cref="PromptCategoriesController"/> class.
+    /// </summary>
 	public PromptCategoriesController()
 	{
 		instance = this;
@@ -37,7 +40,7 @@ public class PromptCategoriesController : Node
 	public override void _Ready()
 	{
 		sqlite = Navigator.SqLiteController;
-		CheckDefaultTable();
+		GenerateDefaultTable();
 	}
 
 	#endregion Constructors
@@ -58,7 +61,15 @@ public class PromptCategoriesController : Node
 		return result;
 	}
 
-	public static void ResetToDefaultTable() => instance.CheckDefaultTable();
+	/// <summary>
+	/// Resets the table to the defaults based on the default prompts file.
+	/// </summary>
+	public static void ResetToDefaultTable()
+	{
+		FileSystem.DeleteFile(DefaultDBPath);
+		FileSystem.CreateFile(DefaultDBPath);
+		instance.GenerateDefaultTable();
+	} 
 
 	#endregion Public Methods
 
@@ -67,34 +78,42 @@ public class PromptCategoriesController : Node
 	/// <summary>
 	/// Checks for the default table of prompts and generates it if not found.
 	/// </summary>
-	private void CheckDefaultTable()
+	private void GenerateDefaultTable()
 	{
-		var filepath = FileSystem.EnsureFilePath(DefaultPromptsPath);
-		var databasePath = FileSystem.EnsureFilePath(DefaultDBPath);
-		if (!FileSystem.FileExists(databasePath))
+		var dataReader = sqlite.ExecuteReader("SELECT name FROM sqlite_master WHERE type = \'table\'");
+		var names = new List<string>();
+		while(dataReader.Read())
 		{
-			using (var reader = new StreamReader(filepath))
+			names.Add(dataReader.GetString(0));
+		}
+		dataReader.Close();
+		if (names.Count() != 0)
+		{
+			return;
+		}
+
+		var filepath = FileSystem.EnsureFilePath(DefaultPromptsPath);
+		using (var reader = new StreamReader(filepath))
+		{
+			string tableName = null;
+			string line;
+			while ((line = reader.ReadLine()) != null)
 			{
-				string tableName = null;
-				string line;
-				while ((line = reader.ReadLine()) != null)
+				if (string.IsNullOrEmpty(line)) { continue; }
+
+				if (line.Contains('#'))
 				{
-					if (string.IsNullOrEmpty(line)) { continue; }
-
-					if (line.Contains('#'))
-					{
-						tableName = line.Remove(0, 1).Replace(' ', '_');
-						CreateDefaultTable(tableName);
-						continue;
-					}
-
-					if (!sqlite.CheckForRow(tableName, line))
-					{
-						InsertData(tableName, line);
-					}
+					tableName = line.Remove(0, 1).Replace(' ', '_');
+					CreateDefaultTable(tableName);
+					continue;
 				}
-				reader.Close();
+
+				if (!sqlite.CheckForRow(tableName, line))
+				{
+					InsertData(tableName, line);
+				}
 			}
+			reader.Close();
 		}
 	}
 

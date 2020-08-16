@@ -50,15 +50,53 @@ public static class FileSystem
         }
     }
 
+    public static void DeleteFile(string filepath)
+    {
+        if (filepath.Contains("res://"))
+        {
+            using (var directory = new Godot.Directory())
+            {
+                directory.Remove(filepath);
+            }
+        }
+        else
+        {
+            System.IO.File.Delete(filepath);
+        }
+    }
+
     /// <summary>
     /// Checks if the file exists at the passed filepath
     /// </summary>
     /// <param name="filepath">The file path to check</param>
     /// <returns>Whether the file exists</returns>
     public static bool FileExists(string filepath) {
-        using (var file = new Godot.File()) 
+        if (filepath.Contains("res://"))
         {
-            return file.FileExists(filepath);
+            using (var file = new Godot.File()) 
+            {
+                return file.FileExists(filepath);
+            }
+        }
+        else
+        {
+            return System.IO.File.Exists(filepath);
+        }
+    }
+
+    public static void CreateFile(string filepath)
+    {
+        if (filepath.Contains("res://"))
+        {
+            using (var file = new Godot.File()) 
+            {
+                file.Open(filepath, Godot.File.ModeFlags.Write);
+                file.Close();
+            }
+        }
+        else
+        {
+            System.IO.File.Create(filepath);
         }
     }
 }

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 /// <summary>
 /// Controller class controlling all functionality related

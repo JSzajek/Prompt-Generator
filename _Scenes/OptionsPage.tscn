@@ -136,15 +136,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SearchButton" type="Button" parent="Options/PromptsPage/SearchBar"]
-margin_left = 215.0
-margin_right = 251.0
-margin_bottom = 35.0
-icon = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="AddBar" type="LineEdit" parent="Options/PromptsPage"]
 margin_left = 435.0
 margin_top = 100.0

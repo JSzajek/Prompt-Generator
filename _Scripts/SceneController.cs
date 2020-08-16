@@ -203,7 +203,6 @@ public class SceneController : Node
 		loadingPath = path;
 		
 		if (ResourceLoader.HasCached(loadingPath)) {
-			GD.Print("Has cached");
 			SetCurrentScene(resources[loadingPath]);
 
 			if (CurrentScene is PreloadableScene scene) {
