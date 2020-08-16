@@ -11,7 +11,8 @@ can draw their interpretation of the character.
 - Timed - Automatic timed intervals to insight quick creative drawings.
 
 ## Task List: ##
-- [ ] Expand the current database of categories and prompts
+- [ ] Expand the current database of categories and prompts.
+- [ ] Update the user interface styling.
 - [ ] Investigate the usage of machine learning [dataset](https://quickdraw.withgoogle.com/data) to auto generate sketches from prompts.
 
 ## Detailed Description ##
@@ -23,6 +24,22 @@ The prompt generator can be utilized within only a few steps.
 4. Selecting generate to begin prompt generation.
 
 ## Included ##
-- Primary Scrips, Assets, Imports, Scenes
+* Primary Scrips, Assets, Imports, Scenes
+* Built Executable Project ([here](/_Builds/Build_1.0/))
 
 ## Example Imagery ##
+
+#### Category Selection ####
+Category selection currently requires at least two categories to be selected at one time in order to generate prompts.
+
+![alt text](/Category_Selection_Example.png)
+
+#### Generated Prompts ####
+
+![alt text](/Generated_Prompts_Example.png)
+
+#### Editing the Prompts Database ####
+Currently the user only has the ability to add or remove the prompts from the prompt categories or reset to defaults.
+Implementing adding or removing categories may or may not be added in future versions.
+
+![alt text](/Editing_Database_Example.png)
