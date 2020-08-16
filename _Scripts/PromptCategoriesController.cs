@@ -13,16 +13,23 @@ public class PromptCategoriesController : Node
 
 	private const string NONE = "\"NONE\"";
 	private const string DefaultPromptsPath = "res://Default Prompts.prompt";
+	private const string DefaultDBPath = "res://database.db";
 
 	#endregion Constants
 
 	#region Fields
 
+	private static PromptCategoriesController instance;
 	private SqLiteController sqlite;	
 
 	#endregion Fields
 
 	#region Constructors
+
+	public PromptCategoriesController()
+	{
+		instance = this;
+	}
 
 	/// <summary>
     /// Initializes a new instance of the <see cref="PromptCategoriesController"/> class.
@@ -51,6 +58,8 @@ public class PromptCategoriesController : Node
 		return result;
 	}
 
+	public static void ResetToDefaultTable() => instance.CheckDefaultTable();
+
 	#endregion Public Methods
 
 	#region Private Methods
@@ -61,28 +70,31 @@ public class PromptCategoriesController : Node
 	private void CheckDefaultTable()
 	{
 		var filepath = FileSystem.EnsureFilePath(DefaultPromptsPath);
-
-		using (var reader = new StreamReader(filepath))
+		var databasePath = FileSystem.EnsureFilePath(DefaultDBPath);
+		if (!FileSystem.FileExists(databasePath))
 		{
-			string tableName = null;
-			string line;
-			while ((line = reader.ReadLine()) != null)
+			using (var reader = new StreamReader(filepath))
 			{
-				if (string.IsNullOrEmpty(line)) { continue; }
-
-				if (line.Contains('#'))
+				string tableName = null;
+				string line;
+				while ((line = reader.ReadLine()) != null)
 				{
-					tableName = line.Remove(0, 1).Replace(' ', '_');
-					CreateDefaultTable(tableName);
-					continue;
-				}
+					if (string.IsNullOrEmpty(line)) { continue; }
 
-				if (!sqlite.CheckForRow(tableName, line))
-				{
-					InsertData(tableName, line);
+					if (line.Contains('#'))
+					{
+						tableName = line.Remove(0, 1).Replace(' ', '_');
+						CreateDefaultTable(tableName);
+						continue;
+					}
+
+					if (!sqlite.CheckForRow(tableName, line))
+					{
+						InsertData(tableName, line);
+					}
 				}
+				reader.Close();
 			}
-			reader.Close();
 		}
 	}
 

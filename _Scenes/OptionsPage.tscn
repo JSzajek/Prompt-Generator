@@ -190,7 +190,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ResetTable" type="Button" parent="Options/PromptsPage"]
+[node name="ResetButton" type="Button" parent="Options/PromptsPage"]
 margin_left = 700.0
 margin_top = 98.0
 margin_right = 835.0

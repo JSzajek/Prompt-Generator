@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 public class PromptsPageController : Control
 {
@@ -21,8 +22,8 @@ public class PromptsPageController : Control
 	#endregion Fields
 
 	/// <summary>
-    /// Initializes a new instance of the <see cref="PromptsPageController"/> class.
-    /// </summary>
+	/// Initializes a new instance of the <see cref="PromptsPageController"/> class.
+	/// </summary>
 	public override void _Ready()
 	{
 		sqlite = Navigator.SqLiteController;
@@ -42,7 +43,33 @@ public class PromptsPageController : Control
 		addBar.Get<Button>("AddButton").Connect("pressed", this, "OnAddButtonPressed");
 		this.Get<LineEdit>("SearchBar").Connect("text_changed", this, "OnSearchBarTextChanged");
 		this.Get<Button>("SearchBar/SearchButton").Connect("pressed", this, "OnSearchButtonPressed");
+		this.Get<Button>("ResetButton").Connect("pressed", this, "OnResetButtonPressed");
 		GenerateCategoryButtons();
+	}
+
+	private void OnResetButtonPressed()
+	{
+		// Forcefully resetting the table - should switch to only updating if there has been changes
+		var dataReader = sqlite.ExecuteReader("SELECT name FROM sqlite_master WHERE type = \'table\'");
+		var lists = new List<string>();
+		
+		while (dataReader.Read())
+		{
+			lists.Add(dataReader.GetString(0));
+		}
+		dataReader.Close();
+
+		foreach(var name in lists)
+		{
+			sqlite.ExecuteCommandNonQuery("DROP TABLE if exists \"" + name + "\";");
+			sqlite.ExecuteCommandNonQuery("VACUUM;");
+		}
+		PromptCategoriesController.ResetToDefaultTable();
+
+		categories.RemoveAllChildren<Button>();
+		prompts.RemoveAllChildren<Control>();
+		GenerateCategoryButtons();
+		
 	}
 
 	private void OnAddBarTextEntered(string newText)
@@ -84,17 +111,17 @@ public class PromptsPageController : Control
 		var dataReader = sqlite.ExecuteReader("SELECT name FROM sqlite_master WHERE type = \'table\'");
 
 		var buttonGroup = new ButtonGroup();
-        var minSize = new Vector2(145, 50);
+		var minSize = new Vector2(145, 50);
 
 		while (dataReader.Read())
 		{
 			var label = new Button();
-            label.RectMinSize = minSize;
+			label.RectMinSize = minSize;
 			label.Group = buttonGroup;
 			label.ToggleMode = true;
 			label.Text = dataReader.GetString(0).Replace('_', ' ');          
 			categories.AddChild(label);
-            label.Connect("toggled", this, "OnCategoryButtonToggled", new Godot.Collections.Array() {dataReader.GetString(0)});
+			label.Connect("toggled", this, "OnCategoryButtonToggled", new Godot.Collections.Array() {dataReader.GetString(0)});
 		}
 		categories.GetChildren<Button>().First().Pressed = true;
 	}
@@ -108,21 +135,21 @@ public class PromptsPageController : Control
 		prompts.AddChild(temptPrompt);
 	}
 
-    private void OnCategoryButtonToggled(bool state, object sender)
-    {
-        if (state && sender is string tableName)
-        {
-            prompts.RemoveAllChildren<Control>();
+	private void OnCategoryButtonToggled(bool state, object sender)
+	{
+		if (state && sender is string tableName)
+		{
+			prompts.RemoveAllChildren<Control>();
 			currentCategory = tableName;
-            
-            var dataReader = sqlite.ExecuteReader("SELECT * FROM " + tableName);
-            while(dataReader.Read())
-            {
+			
+			var dataReader = sqlite.ExecuteReader("SELECT * FROM " + tableName);
+			while(dataReader.Read())
+			{
 				AddPrompt(dataReader.GetString(0));
-            }
+			}
 			dataReader.Close();
-        }
-    }
+		}
+	}
 
 	private void OnPromptDeletePressed(object prompt, object value)
 	{
