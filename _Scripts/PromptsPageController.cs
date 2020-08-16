@@ -24,6 +24,8 @@ public class PromptsPageController : Control
 
 	#endregion Fields
 
+	#region Constructors
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PromptsPageController"/> class.
 	/// </summary>
@@ -48,6 +50,10 @@ public class PromptsPageController : Control
 		this.Get<Button>("ResetButton").Connect("pressed", this, "OnResetButtonPressed");
 		GenerateCategoryButtons();
 	}
+
+	#endregion Constructors
+
+	#region Private Methods
 
 	/// <summary>
 	/// Generates the category buttons based on the tables within the current
@@ -170,7 +176,19 @@ public class PromptsPageController : Control
 	/// <param name="newText">The currently searching string value</param>
 	private void OnSearchBarTextChanged(string newText)
 	{
+		if (string.IsNullOrWhiteSpace(newText))
+		{
+			foreach(var category in categories.GetChildren<Button>())
+			{
+				category.Visible = true;
+			}
+			return;
+		}
 
+		foreach(var category in categories.GetChildren<Button>())
+		{
+			category.Visible = category.Text.ToLower().Contains(newText.ToLower());
+		}
 	}
 
 	/// <summary>
@@ -206,4 +224,6 @@ public class PromptsPageController : Control
 		prompts.RemoveChild(prompt as Control);
 		RemoveData(currentCategory, value as string);
 	}
+
+	#endregion Private Methods
 }
